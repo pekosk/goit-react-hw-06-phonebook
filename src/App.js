@@ -7,7 +7,8 @@ import Contacts from './components/Contacts';
 import Filter from './components/Filter';
 
 function App() {
-  const [contacts, setContacts] = useState([
+  const [contacts, setContacts] = useState(
+    JSON.parse(window.localStorage.getItem("contacts")) ?? [
     { id: "id-1", name: "Rosie Simpson", number: "459-12-56" },
     { id: "id-2", name: "Hermione Kline", number: "443-89-12" },
     { id: "id-3", name: "Eden Clements", number: "645-17-79" },
@@ -16,20 +17,7 @@ function App() {
   const [filter, setFilter] = useState("");
 
   useEffect(() => {
-    const contacts = JSON.parse(localStorage.getItem("contacts"));
-    if (!Array.isArray(contacts)) {
-      return;
-    }
-    if (contacts.length) {
-      setContacts(contacts);
-    }
-  }, []);
-
-  useEffect(() => {
-    const contacts = JSON.parse(localStorage.getItem("contacts"));
-    if (contacts.length !== contacts.length) {
-      localStorage.setItem("contacts", JSON.stringify(contacts));
-    }
+        localStorage.setItem("contacts", JSON.stringify(contacts));
   }, [contacts]);
 
   const addContact = useCallback((data) => {
