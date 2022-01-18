@@ -1,6 +1,5 @@
-import styles from "./Contacts.module.css";
 import { memo } from 'react';
-import { removeContact } from "../../redux/contacts/contactsActions";
+import { removeContact } from '../../redux/contacts/contactsActions';
 import { useDispatch, useSelector } from "react-redux";
 
 import ContactsItem from './ContactsItem';
@@ -9,7 +8,7 @@ const Contacts = () => {
   const dispatch = useDispatch();
   const contacts = useSelector((state) => state.contact);
   const filter = useSelector((state) => state.filter);
-  const removeContact = (id) => dispatch(removeContact(id));
+  const removeContacts = (id) => dispatch(removeContact(id));
     
   const getItems = () => {
     if ( filter === '') return contacts;
@@ -23,7 +22,7 @@ const Contacts = () => {
       key={id}
       {...item}
       id={id}
-      onDelete={removeContact}
+      onDelete={removeContacts}
     />
   ));
   return <ul>{elements}</ul>;

@@ -18,7 +18,6 @@ function Form() {
   const handleSubmit = (e) => {
      e.preventDefault();
     const contacts = { name, number };
-    console.log(addContact(contacts))
     const isNameContact = contactSelector.some( e => e.name.toLowerCase() === name.toLowerCase())
     if (isNameContact) {
       return alert(`${name} is already in contacts.`);

@@ -1,16 +1,16 @@
 import PropTypes from "prop-types";
 import { memo } from "react";
-import style from "./ContactsItem.module.css";
+import styles from "./ContactsItem.module.css";
 
 const ContactItem = ({ id, name, number, onDelete }) => {
   const remove = () => onDelete(id);
   return (
-    <li className={style.li}>
+    <li className={styles.contactItem}>
       <p>
         {name}: {number}
       </p>
-      <button className={style.btn} onClick={remove}>
-        delete
+      <button className={styles.btn} onClick={remove}>
+        Delete
       </button>
     </li>
   );
