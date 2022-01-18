@@ -2,29 +2,45 @@ import styles from "./Form.module.css";
 import PropTypes from "prop-types";
 import {nanoid} from "nanoid";
 import { useState, memo } from 'react';
+import { useDispatch, useSelector } from "react-redux";
+import { addContact } from '../../redux/contacts/contactsActions';
 
 
 
-function Form({ onSubmit }) {
-  const initialState = {
-    name: '',
-    number: '',
-  }
-
-  const [state, setState] = useState(initialState)
+function Form() {
+  const [name, setName] = useState('');
+  const [number, setNumber] = useState('');
+  const dispatch = useDispatch();
+  const contactSelector = useSelector((state) => state.contacts)
 
   const nameRandomId = nanoid();
   const numberRandomId = nanoid();
 
-   const handleChange = ({ target }) => {
-    const { name, value } = target;
-    setState({ ...state, [name]: value });
+  const handleSubmit = (e) => {
+     e.preventDefault();
+    const contact = { name, number };
+    console.log(addContact(contact))
+    const isNameContact = contactSelector.some( e => e.name.toLowerCase() === name.toLowerCase())
+    if (isNameContact) {
+      return alert(`${name} is already in contacts.`);
+    }
+    dispatch(addContact(contact));
+    setName('');
+    setNumber('')
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onSubmit(state);
-    setState(initialState);
+   const handleChange = ({ target }) => {
+    const { name, value } = target;
+    switch (name) {
+        case 'name':
+          setName(value);
+          return;
+        case 'number':
+          setNumber(value);
+          return;
+        default:
+          return;
+      }
   };
   
     return (
@@ -34,7 +50,7 @@ function Form({ onSubmit }) {
             Name:
             <input
               onChange={handleChange}
-              value={state.name}
+              value={name}
               id={nameRandomId}
               className={styles.input}
               type="text"
@@ -49,7 +65,7 @@ function Form({ onSubmit }) {
             Number:
             <input
               className={styles.input}
-              value={state.number}
+              value={number}
               id={numberRandomId}
               onChange={handleChange}
               name="number"
