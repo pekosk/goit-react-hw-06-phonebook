@@ -1,5 +1,4 @@
 import styles from "./Form.module.css";
-import PropTypes from "prop-types";
 import {nanoid} from "nanoid";
 import { useState, memo } from 'react';
 import { useDispatch, useSelector } from "react-redux";
@@ -11,20 +10,20 @@ function Form() {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
   const dispatch = useDispatch();
-  const contactSelector = useSelector((state) => state.contacts)
+  const contactSelector = useSelector((state) => state.contact)
 
   const nameRandomId = nanoid();
   const numberRandomId = nanoid();
 
   const handleSubmit = (e) => {
      e.preventDefault();
-    const contact = { name, number };
-    console.log(addContact(contact))
+    const contacts = { name, number };
+    console.log(addContact(contacts))
     const isNameContact = contactSelector.some( e => e.name.toLowerCase() === name.toLowerCase())
     if (isNameContact) {
       return alert(`${name} is already in contacts.`);
     }
-    dispatch(addContact(contact));
+    dispatch(addContact(contacts));
     setName('');
     setNumber('')
   };
@@ -82,10 +81,5 @@ function Form() {
       </div>
     );
   }
-
-
-Form.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-};
 
 export default memo(Form);

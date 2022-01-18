@@ -14,10 +14,10 @@ import contactsReducer from "./contacts/contactsReducer";
 import filterReducer from "./filter/filterReducer";
 
 const persistConfig = {
-    key: "contacts",
+    key: "contact",
     version: 1,
     storage,
-    whitelist: ["contacts"],
+    whitelist: ["contact"],
 };
 
 const middleware = (getDefaultMiddleware) =>
@@ -28,7 +28,7 @@ const middleware = (getDefaultMiddleware) =>
     });
 
 const rootReducer = combineReducers({
-    contacts: contactsReducer,
+    contact: contactsReducer,
     filter: filterReducer,
 });
 
